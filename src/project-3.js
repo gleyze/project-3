@@ -1,86 +1,107 @@
 import { LitElement, html, css } from 'lit';
 
-const logo = new URL('../assets/open-wc-logo.svg', import.meta.url).href;
+import '@lrnwebcomponents/simple-icon/simple-icon.js';
+import '@lrnwebcomponents/simple-icon/lib/simple-icons.js';
 
-class Project3 extends LitElement {
+class AudioPlayer {
+  constructor(audio, playPauseBtn, progressBar) {
+    this.paragraph = "Tens of thousands of Egyptians packed into Tahrir Square in central Cairo on Friday. The crowd was as large as any that has gathered in the square since the protests that forced out President Hosni Mubarak in February 2011.";
+    this.audio = audio;
+    this.playPauseBtn = playPauseBtn;
+    this.progressBar = progressBar;
+  }
+
+  playAudio() {
+    if (this.audio.paused) {
+      this.audio.play();
+      this.playPauseBtn.textContent = "Pause";
+    } else {
+      this.audio.pause();
+      this.playPauseBtn.textContent = "Play";
+    }
+  }
+
+  updateProgressBar() {
+    const progress = (this.audio.currentTime / this.audio.duration) * 100;
+    this.progressBar.style.width = `${progress}%`;
+  }
+
+  initialize() {
+    this.playPauseBtn.addEventListener("click", () => this.playAudio());
+    this.audio.addEventListener("timeupdate", () => this.updateProgressBar());
+  }
+}
+
+export class Project3 extends LitElement {
   static properties = {
     header: { type: String },
+    audioFile: { attribute: "audio-file", type: String},
+    playing: { type: Boolean}
   }
 
   static styles = css`
-    :host {
-      min-height: 100vh;
+    .audio-player {
       display: flex;
-      flex-direction: column;
       align-items: center;
-      justify-content: flex-start;
-      font-size: calc(10px + 2vmin);
-      color: #1a2b42;
-      max-width: 960px;
+      justify-content: center;
+      width: 100%;
+      max-width: 500px;
       margin: 0 auto;
-      text-align: center;
-      background-color: var(--project-3-background-color);
+      padding: 20px;
+      background-color: #f5f5f5;
+      border-radius: 10px;
     }
 
-    main {
-      flex-grow: 1;
+    .play-pause-btn {
+      width: 100px;
+      height: 40px;
+      font-size: 18px;
+      font-weight: bold;
+      text-transform: uppercase;
+      color: #fff;
+      background-color: #007bff;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      margin-right: 20px;
     }
 
-    .logo {
-      margin-top: 36px;
-      animation: app-logo-spin infinite 20s linear;
+    .progress-bar-container {
+      height: 40px;
+      width: 100%;
+      background-color: #ccc;
+      border-radius: 5px;
+      overflow: hidden;
     }
 
-    @keyframes app-logo-spin {
-      from {
-        transform: rotate(0deg);
-      }
-      to {
-        transform: rotate(360deg);
-      }
-    }
-
-    .app-footer {
-      font-size: calc(12px + 0.5vmin);
-      align-items: center;
-    }
-
-    .app-footer a {
-      margin-left: 5px;
+    .progress-bar {
+      height: 100%;
+      background-color: #5A5A5A;
+      width: 0%;
+      transition: width 0.1s ease-in-out;
     }
   `;
 
   constructor() {
     super();
-    this.header = 'My app';
+    this.audioPlayer = new AudioPlayer(
+      this.shadowRoot.querySelector("audio"),
+      this.shadowRoot.querySelector(".play-pause-btn"),
+      this.shadowRoot.querySelector(".progress-bar")
+    );
+    this.audioPlayer.initialize();
   }
 
   render() {
     return html`
-      <main>
-        <div class="logo"><img alt="open-wc logo" src=${logo} /></div>
-        <h1>${this.header}</h1>
-
-        <p>Edit <code>src/Project3.js</code> and save to reload.</p>
-        <a
-          class="app-link"
-          href="https://open-wc.org/guides/developing-components/code-examples/"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Code examples
-        </a>
-      </main>
-
-      <p class="app-footer">
-        🚽 Made with love by
-        <a
-          target="_blank"
-          rel="noopener noreferrer"
-          href="https://github.com/open-wc"
-          >open-wc</a
-        >.
-      </p>
+      <div class="audio-player">
+        <audio src="http://commondatastorage.googleapis.com/codeskulptor-assets/Evillaugh.ogg"></audio>
+        <button class="play-pause-btn">Play</button>
+        <div class="progress-bar-container">
+        <div class="progress-bar"></div>
+        <div class="paragraph">${this.paragraph}</div>
+        </div>
+      </div>
     `;
   }
 }
