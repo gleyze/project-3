@@ -37,7 +37,7 @@ export default {
         {
           src: 'assets',
           dest: 'dist',
-        }
+        } 
       ],
     }),
 
