@@ -4,6 +4,9 @@ import { LitElement, html, css } from 'lit';
 import '@lrnwebcomponents/simple-icon/simple-icon.js';
 import '@lrnwebcomponents/simple-icon/lib/simple-icons.js';
 import '@lrnwebcomponents/simple-colors';
+import "@lrnwebcomponents/simple-icon/lib/simple-icon-button.js";
+
+import "@lrnwebcomponents/hax-iconset/lib/simple-hax-iconset.js";
 
 export class Project3 extends LitElement {
   static properties = {
@@ -36,9 +39,6 @@ export class Project3 extends LitElement {
       font-size: 18px;
       position: relative;
       z-index: 1;
-    }
-    .icon-spacing{
-      padding-right: 8px;
     }
     .progress-bar {
       height: 100%;
@@ -103,7 +103,7 @@ export class Project3 extends LitElement {
   render() {
     return html`
       <div class="container" @click="${this.togglePlayPause}"> 
-      <simple-icon class="icon-spacing" icon="${this.icon}"></simple-icon>
+      <simple-icon-button icon="${this.icon}"></simple-icon-button>
       <slot></slot>
       <audio class="player" src="${this.filename}" @timeupdate="${this.updateProgressBar}"></audio>
       <div class="progress-bar"></div>
