@@ -32,9 +32,15 @@ export default {
         {
           src: 'node_modules/@lrnwebcomponents/simple-icon/lib/svgs',
           dest: 'dist',
+
+        }, 
+        {
+          src: 'assets',
+          dest: 'dist',
         }
       ],
     }),
+
 
     /** Minify JS, compile JS to a lower language target */
     esbuild({
