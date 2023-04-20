@@ -3,6 +3,7 @@ import { LitElement, html, css } from 'lit';
 
 import '@lrnwebcomponents/simple-icon/simple-icon.js';
 import '@lrnwebcomponents/simple-icon/lib/simple-icons.js';
+import '@lrnwebcomponents/simple-colors';
 
 export class Project3 extends LitElement {
   static properties = {
@@ -27,8 +28,8 @@ export class Project3 extends LitElement {
     .container {
       display: inline-flex;
       align-items: center;
-      padding: 0.5px 0.5px 0.5px 1px;
-      background-color: white;
+      padding: 0.5px 10px 0.5px 0px;
+      background-color: var(--simple-colors-default-theme-pink-7);
       border-radius: 4px;
       min-width: 64px;
       cursor: pointer;
@@ -41,7 +42,7 @@ export class Project3 extends LitElement {
     }
     .progress-bar {
       height: 100%;
-      background-color: grey;
+      background-color: var(--simple-colors-default-theme-pink-8);
       transition: width 0.1s;
       position: absolute;
       border-radius: 4px;
@@ -51,13 +52,13 @@ export class Project3 extends LitElement {
     }
     .progress {
       height: 100%;
-      background-color: grey;
-      width: 0;
+      background-color: var(--simple-colors-default-theme-pink-8);
       position: absolute;
       border-radius: 4px;
       top: 0;
       left: 0;
       z-index: -1;
+      animation: progress-bar 1s linear forwards;
     }
   `;
 
@@ -66,20 +67,25 @@ export class Project3 extends LitElement {
     this.isPlaying = false;
     this.icon = "av:play-arrow";
     this.filename = '';
+    
   }
 
 
   togglePlayPause() {
     const audio = this.shadowRoot.querySelector('audio');
-    if (audio.paused) {
-      audio.play();
-      this.isPlaying = true;
-      this.icon = "av:pause";
-    } else {
-      audio.pause();
+  if (audio.paused) {
+    audio.play();
+    this.isPlaying = true;
+    this.icon = "av:pause";
+    audio.addEventListener('ended', () => {
       this.isPlaying = false;
       this.icon = "av:play-arrow";
-    }
+    });
+  } else {
+    audio.pause();
+    this.isPlaying = false;
+    this.icon = "av:play-arrow";
+  }
   }
 
   updateProgressBar() {
@@ -88,6 +94,9 @@ export class Project3 extends LitElement {
     if (progressBar) {
       const progress = (audio.currentTime / audio.duration) * 100;
       progressBar.style.width = `${progress}%`;
+      if (!audio.paused) {
+        requestAnimationFrame(() => this.updateProgressBar());
+      }
     }
   }
 
