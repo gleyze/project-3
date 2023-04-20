@@ -44,7 +44,7 @@ export class Project3 extends SimpleColors {
     }
     .progress-bar {
       height: 100%;
-      background-color: var(--simple-colors-default-theme-pink-3);
+      background-color: var(--simple-colors-default-theme-pink-5);
       transition: width 0.1s;
       position: absolute;
       border-radius: 4px;
@@ -54,7 +54,7 @@ export class Project3 extends SimpleColors {
     }
     .progress {
       height: 100%;
-      background-color: var(--simple-colors-default-theme-pink-3);
+      background-color: var(--simple-colors-default-theme-pink-5);
       position: absolute;
       border-radius: 4px;
       top: 0;
