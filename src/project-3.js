@@ -1,24 +1,27 @@
 
 import { LitElement, html, css } from 'lit';
+import {SimpleColors } from '@lrnwebcomponents/simple-colors';
 
 import '@lrnwebcomponents/simple-icon/simple-icon.js';
 import '@lrnwebcomponents/simple-icon/lib/simple-icons.js';
 import '@lrnwebcomponents/simple-colors';
 import "@lrnwebcomponents/simple-icon/lib/simple-icon-button.js";
 
-import "@lrnwebcomponents/hax-iconset/lib/simple-hax-iconset.js";
 
-export class Project3 extends LitElement {
-  static properties = {
-    paragraph: { type: String, reflect: true},
-    audioFile: { attribute: "audio-file", type: String, reflect: true},
-    isPlaying: { type: Boolean, reflect: true},
-    icon: {type: String, reflect: true},
-    filename: {type: String, reflect: true}
+export class Project3 extends SimpleColors {
+  static get properties(){
+    return{
+      ...super.properties,
+        paragraph: { type: String, reflect: true},
+        audioFile: { attribute: "audio-file", type: String, reflect: true},
+        isPlaying: { type: Boolean, reflect: true},
+        icon: {type: String, reflect: true},
+        filename: {type: String, reflect: true}
+    }
   }
-
+  
     
-  static styles = css`
+  static styles = [...super.styles, css`
     :host {
       min-height: 100vh;
       display: inline;
@@ -26,13 +29,12 @@ export class Project3 extends LitElement {
       color: #1a2b42;
       max-width: 960px;
       margin: 0 auto;
-      background-color: var(--inline-audio-background-color);
     }
     .container {
       display: inline-flex;
       align-items: center;
       padding: 0.5px 10px 0.5px 0px;
-      background-color: var(--simple-colors-default-theme-pink-7);
+      background-color: var(--simple-colors-default-theme-pink-2);
       border-radius: 4px;
       min-width: 64px;
       cursor: pointer;
@@ -42,7 +44,7 @@ export class Project3 extends LitElement {
     }
     .progress-bar {
       height: 100%;
-      background-color: var(--simple-colors-default-theme-pink-8);
+      background-color: var(--simple-colors-default-theme-pink-3);
       transition: width 0.1s;
       position: absolute;
       border-radius: 4px;
@@ -52,7 +54,7 @@ export class Project3 extends LitElement {
     }
     .progress {
       height: 100%;
-      background-color: var(--simple-colors-default-theme-pink-8);
+      background-color: var(--simple-colors-default-theme-pink-3);
       position: absolute;
       border-radius: 4px;
       top: 0;
@@ -60,7 +62,7 @@ export class Project3 extends LitElement {
       z-index: -1;
       animation: progress-bar 1s linear forwards;
     }
-  `;
+  `];
 
   constructor() {
     super();
